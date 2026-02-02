@@ -1,0 +1,5 @@
+org.example.recensement
+org.example.recensement.controllers
+org.example.recensement.entities
+org.example.recensement.repositories
+org.example.recensement.services

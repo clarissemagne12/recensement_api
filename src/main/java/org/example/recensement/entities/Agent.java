@@ -23,44 +23,90 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
+ * ENTITÉ : Agent
+ * ================================
+ * Cette classe représente un agent de recensement.
+ * Elle est mappée à une table de la base de données via JPA.
  *
- * @author user
+ * Un agent :
+ * - possède un identifiant unique
+ * - a un nom
+ * - est associé à un rôle
+ * - peut effectuer plusieurs recensements
+ * @author clarisse
  */
-@Entity
-@Table(catalog = "recensement", schema = "")
+@Entity // Indique que cette classe est une entité JPA
+@Table(catalog = "recensement", schema = "") // Associe l'entité à la base de données
 @NamedQueries({
+        // Requête pour récupérer tous les agents
     @NamedQuery(name = "Agent.findAll", query = "SELECT a FROM Agent a"),
+        // Requête pour rechercher un agent par son identifiant
     @NamedQuery(name = "Agent.findById", query = "SELECT a FROM Agent a WHERE a.id = :id"),
+
+        // Requête pour rechercher un agent par son nom
     @NamedQuery(name = "Agent.findByNom", query = "SELECT a FROM Agent a WHERE a.nom = :nom")})
 public class Agent implements Serializable {
-
+    // Identifiant pour la sérialisation
     private static final long serialVersionUID = 1L;
+    /**
+     * Identifiant unique de l’agent
+     * Clé primaire auto-générée
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
     private Integer id;
+
+    /**
+     * Nom de l’agent
+     * Champ obligatoire avec une longueur maximale de 191 caractères
+     */
     @Basic(optional = false)
     @Column(nullable = false, length = 191)
     private String nom;
+
+
+    /**
+     * Rôle de l’agent
+     * Relation ManyToOne : plusieurs agents peuvent avoir le même rôle
+     */
     @JoinColumn(name = "idRole", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Role idRole;
+
+    /**
+     * Liste des recensements effectués par l’agent
+     * Relation OneToMany : un agent peut effectuer plusieurs recensements
+     */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAgent")
     private Collection<Recensement> recensementCollection;
 
+    /**
+     * Constructeur par défaut (obligatoire pour JPA)
+     */
     public Agent() {
     }
 
+    /**
+     * Constructeur avec identifiant
+     */
     public Agent(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Constructeur avec identifiant et nom
+     */
     public Agent(Integer id, String nom) {
         this.id = id;
         this.nom = nom;
     }
 
+
+    /**
+     * GENERATION DES GETTERS ET SETTERS PAR DEFAUT ET AVEC UN PARAMETRE
+     */
     public Integer getId() {
         return id;
     }
@@ -93,6 +139,9 @@ public class Agent implements Serializable {
         this.recensementCollection = recensementCollection;
     }
 
+    /**
+     * Méthode hashCode basée sur l’identifiant
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -100,6 +149,9 @@ public class Agent implements Serializable {
         return hash;
     }
 
+    /**
+     * Comparaison entre deux agents basée sur l’identifiant
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -113,6 +165,9 @@ public class Agent implements Serializable {
         return true;
     }
 
+    /**
+     * Représentation textuelle de l’agent
+     */
     @Override
     public String toString() {
         return "com.mycompany.mavenproject3.Agent[ id=" + id + " ]";

@@ -11,10 +11,17 @@ import org.example.recensement.entities.Role;
 import java.io.Serializable;
 
 /**
+ * CLASSE : Chefbureau
+ * ==================================================
+ * Cette classe représente un chef de bureau
+ * dans l’application de gestion de recensement.
  *
- * @author user
+ * Elle est mappée à une table de la base de données
+ * à l’aide de JPA (Hibernate).
+ *
+ * @author clarisse
  */
-@Getter
+@Getter//genere automatiquement les getters (Lombok)
 @Entity
 @Table(catalog = "recensement", schema = "")
 @NamedQueries({

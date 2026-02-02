@@ -12,7 +12,7 @@ import java.util.Collection;
 
 /**
  *
- * @author user
+ * @author clarisse
  */
 @Entity
 @Table(catalog = "recensement", schema = "")
