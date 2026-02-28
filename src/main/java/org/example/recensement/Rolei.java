@@ -11,11 +11,5 @@ public interface Rolei {
     Role save(Role role);
     void deleteById(Long id);
     Role update(Role role);
-<<<<<<< HEAD
-
-
 
 }
-=======
-}
->>>>>>> d6aa50cdfb76f4a5a289f40c6dc200d12f99d362
