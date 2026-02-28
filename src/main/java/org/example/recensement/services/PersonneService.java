@@ -2,12 +2,10 @@ package org.example.recensement.services;
 
 import jakarta.transaction.Transactional;
 import org.example.recensement.Personnei;
-import org.example.recensement.entities.Chefbureau;
 import org.example.recensement.entities.Personne;
-import org.example.recensement.entities.Recensement;
-import org.example.recensement.repositories.ChefbureauRepository;
 import org.example.recensement.repositories.PersonneRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,81 +15,57 @@ import java.util.Optional;
 @Transactional
 public class PersonneService implements Personnei {
 
-    /** Repository injecté pour accéder aux données des rapports
-     * ou d'injecter un objet dans une autre classe
-     * sans instanciation manuelle avec new
-     */
-    @Autowired
+    private static final Logger logger =
+            LoggerFactory.getLogger(PersonneService.class);
 
-    /** Repository injecté pour accéder aux données des personnes */
     private final PersonneRepository personneRepository;
 
-    /**
-     * Constructeur du service personne.
-     *
-     * @param personneRepository le repository de l'entité
-     */
-
     public PersonneService(PersonneRepository personneRepository) {
-
         this.personneRepository = personneRepository;
     }
 
-    /**
-     * Récupère tous les personnes enregistrés.
-     *
-     * @return liste de tous les personnes
-     */
     @Override
-    public List<Personne> findAll(){
-        return personneRepository.findAll();
-    }
-    @Override
-
-    /**
-     * Méthode publique qui peut être appelée
-     * depuis n’importe quelle classe (comme ton contrôleur).
-     *
-     * Elle prend un identifiant id de type Long
-     * pour rechercher une personne.
-     */
-    public Optional<Personne> findById(Long id){
-        return personneRepository.findById(id);
+    public List<Personne> findAll() {
+        logger.info("Service : récupération de toutes les personnes");
+        List<Personne> personnes = personneRepository.findAll();
+        logger.debug("Nombre de personnes récupérées : {}", personnes.size());
+        return personnes;
     }
 
-    /**
-     * Enregistre un nouveau personne dans la base de données.
-     *
-     * @param personne l'objet agent à enregistrer
-     * @return un personne enregistré avec son ID généré
-     */
     @Override
-    public Personne save(Personne personne){
-
-        return personneRepository.save(personne);
+    public Optional<Personne> findById(Long id) {
+        logger.info("Service : recherche de la personne id={}", id);
+        return personneRepository.findById(id)
+                .map(p -> {
+                    logger.debug("Personne trouvée id={}", id);
+                    return p;
+                })
+                .or(() -> {
+                    logger.warn("Personne non trouvée id={}", id);
+                    return Optional.empty();
+                });
     }
 
-    /**
-     * Met à jour un personne existant.
-     *
-     * @param personne le personne à mettre à jour
-     * @return le personne mis à jour
-     */
     @Override
-    public Personne update(Personne personne){
-
-        return personneRepository.save(personne);
+    public Personne save(Personne personne) {
+        logger.info("Service : création d’une personne");
+        Personne saved = personneRepository.save(personne);
+        logger.info("Personne créée id={}", saved.getId());
+        return saved;
     }
 
-    /**
-     * Cette méthode permet de supprimer un enregistrement
-     * de la base de données à partir de son identifiant.
-     *
-     * @param id l'objet rapport à supprimer
-     *
-     */
     @Override
-    public void deleteById(Long id){
+    public Personne update(Personne personne) {
+        logger.info("Service : mise à jour de la personne id={}", personne.getId());
+        Personne updated = personneRepository.save(personne);
+        logger.info("Personne mise à jour id={}", updated.getId());
+        return updated;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        logger.info("Service : suppression de la personne id={}", id);
         personneRepository.deleteById(id);
+        logger.info("Personne supprimée id={}", id);
     }
 }

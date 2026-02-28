@@ -39,7 +39,7 @@ public class Personne implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(nullable = false, length = 191)
     private String nom;
@@ -88,11 +88,11 @@ public class Personne implements Serializable {
     public Personne() {
     }
 
-    public Personne(Integer id) {
+    public Personne(Long id) {
         this.id = id;
     }
 
-    public Personne(Integer id, String nom, String prenom, LocalDate dateNais, String sexe, String province, String territoire, String village, String pere, String mere, String profession, String etatCivil, String adresse, int nbreEnfant) {
+    public Personne(Long id, String nom, String prenom, LocalDate dateNais, String sexe, String province, String territoire, String village, String pere, String mere, String profession, String etatCivil, String adresse, int nbreEnfant) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -109,11 +109,11 @@ public class Personne implements Serializable {
         this.nbreEnfant = nbreEnfant;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

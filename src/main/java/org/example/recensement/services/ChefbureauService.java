@@ -2,10 +2,10 @@ package org.example.recensement.services;
 
 import jakarta.transaction.Transactional;
 import org.example.recensement.Chefbureaui;
-import org.example.recensement.entities.Agent;
 import org.example.recensement.entities.Chefbureau;
 import org.example.recensement.repositories.ChefbureauRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,81 +15,57 @@ import java.util.Optional;
 @Transactional
 public class ChefbureauService implements Chefbureaui {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(ChefbureauService.class);
 
-    @Autowired
-
-    /** Repository injecté pour accéder aux données des chefbureau */
     private final ChefbureauRepository chefbureauRepository;
 
-    /**
-     * Constructeur du service chefbureau.
-     *
-     * @param chefbureauRepository le repository de l'entité
-     */
-
     public ChefbureauService(ChefbureauRepository chefbureauRepository) {
-
         this.chefbureauRepository = chefbureauRepository;
     }
 
-    /**
-     * Récupère tous les chefbureau enregistrés.
-     *
-     * @return liste de tous les chefbureau
-     */
     @Override
-    /**
-     * Méthode publique qui peut être appelée
-     * depuis n’importe quelle classe (comme ton contrôleur).
-     *
-     * Elle prend un identifiant id de type Long
-     * pour rechercher un Chefbureau.
-     */
-    public List<Chefbureau> findAll(){
-        return chefbureauRepository.findAll();
-    }
-    @Override
-    public Optional<Chefbureau> findById(Long id){
-        return chefbureauRepository.findById(id);
+    public List<Chefbureau> findAll() {
+        logger.info("Service : récupération de tous les chefbureaux");
+        List<Chefbureau> list = chefbureauRepository.findAll();
+        logger.debug("Nombre de chefbureaux récupérés : {}", list.size());
+        return list;
     }
 
-    /**
-     * Enregistre un nouveau chefbureau dans la base de données.
-     *
-     * @param chefbureau l'objet agent à enregistrer
-     * @return un chefbureau enregistré avec son ID généré
-     */
     @Override
-    public Chefbureau save(Chefbureau chefbureau){
-
-        return chefbureauRepository.save(chefbureau);
+    public Optional<Chefbureau> findById(Long id) {
+        logger.info("Service : recherche du chefbureau id={}", id);
+        return chefbureauRepository.findById(id)
+                .map(c -> {
+                    logger.debug("Chefbureau trouvé id={}", id);
+                    return c;
+                })
+                .or(() -> {
+                    logger.warn("Chefbureau non trouvé id={}", id);
+                    return Optional.empty();
+                });
     }
 
-    /**
-     * Met à jour un chefbureau existant.
-     *
-     * @param chefbureau le chefbureau à mettre à jour
-     * @return le chefbureau mis à jour
-     */
     @Override
-    public Chefbureau update(Chefbureau chefbureau){
-
-        return chefbureauRepository.save(chefbureau);
+    public Chefbureau save(Chefbureau chefbureau) {
+        logger.info("Service : création d’un chefbureau");
+        Chefbureau saved = chefbureauRepository.save(chefbureau);
+        logger.info("Chefbureau créé id={}", saved.getId());
+        return saved;
     }
 
-    /**
-     * Cette méthode permet de supprimer un enregistrement
-     * de la base de données à partir de son identifiant.
-     *
-     * @param id l'objet rapport à supprimer
-     *
-     */
     @Override
-    public void deleteById(Long id){
+    public Chefbureau update(Chefbureau chefbureau) {
+        logger.info("Service : mise à jour du chefbureau id={}", chefbureau.getId());
+        Chefbureau updated = chefbureauRepository.save(chefbureau);
+        logger.info("Chefbureau mis à jour id={}", updated.getId());
+        return updated;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        logger.info("Service : suppression du chefbureau id={}", id);
         chefbureauRepository.deleteById(id);
+        logger.info("Chefbureau supprimé id={}", id);
     }
 }
-
-
-
-

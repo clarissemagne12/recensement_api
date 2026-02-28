@@ -4,7 +4,8 @@ import jakarta.transaction.Transactional;
 import org.example.recensement.Rapporti;
 import org.example.recensement.entities.Rapport;
 import org.example.recensement.repositories.RapportRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,96 +15,57 @@ import java.util.Optional;
 @Transactional
 public class RapportService implements Rapporti {
 
-    /** annotation d'injecter un objet dans une autre classe
-     * sans instanciation manuelle avec new
-     */
-    @Autowired
+    private static final Logger logger =
+            LoggerFactory.getLogger(RapportService.class);
 
-    /** Repository injecté pour accéder aux données des rapports */
     private final RapportRepository rapportRepository;
 
-    /**
-     * Constructeur du service rapport.
-     *
-     * @param rapportRepository le repository de l'entité
-     */
-
     public RapportService(RapportRepository rapportRepository) {
-
         this.rapportRepository = rapportRepository;
     }
 
-
     @Override
-    /**Récupère toutes
-     * les rapports enregistrés.
-     * @return liste de tous les rapports
-     */
-    public List<Rapport> findAll(){
-        return rapportRepository.findAll();
-    }
-    /**Cette annotation indique que la méthode redéfinit une
-     * méthode déclarée dans une interface
-     * ou une classe parente
-     */
-    @Override
-
-    /**
-     * Méthode publique qui peut être appelée
-     * depuis n’importe quelle classe (comme ton contrôleur).
-     *
-     * Elle prend un identifiant id de type Long
-     * pour rechercher un rapport.
-     */
-    public Optional<Rapport> findById(Long id){
-        return rapportRepository.findById(id);
+    public List<Rapport> findAll() {
+        logger.info("Service : récupération de tous les rapports");
+        List<Rapport> rapports = rapportRepository.findAll();
+        logger.debug("Nombre de rapports récupérés : {}", rapports.size());
+        return rapports;
     }
 
-
-    /**Cette annotation indique que la méthode redéfinit une
-     * méthode déclarée dans une interface
-     * ou une classe parente
-     */
     @Override
-
-    /**
-     * Enregistre un nouveau rapports dans la base de données.
-     *
-     * @param rapport l'objet rapport à enregistrer
-     * @return un rapport enregistré avec son ID généré
-     */
-
-    public Rapport save(Rapport rapport){
-
-        return rapportRepository.save(rapport);
+    public Optional<Rapport> findById(Long id) {
+        logger.info("Service : recherche du rapport id={}", id);
+        return rapportRepository.findById(id)
+                .map(r -> {
+                    logger.debug("Rapport trouvé id={}", id);
+                    return r;
+                })
+                .or(() -> {
+                    logger.warn("Rapport non trouvé id={}", id);
+                    return Optional.empty();
+                });
     }
 
-    /**
-     * Met à jour d'un rapport existant.
-     *
-     * @param rapport le rapport à mettre à jour
-     * @return le rapport mis à jour
-     */
     @Override
-    public Rapport update(Rapport rapport){
-
-        return rapportRepository.save(rapport);
+    public Rapport save(Rapport rapport) {
+        logger.info("Service : création d’un rapport");
+        Rapport saved = rapportRepository.save(rapport);
+        logger.info("Rapport créé id={}", saved.getId());
+        return saved;
     }
 
-
-    /**Cette annotation indique que la méthode redéfinit une
-     * méthode déclarée dans une interface
-     * ou une classe parente
-     */
+    @Override
+    public Rapport update(Rapport rapport) {
+        logger.info("Service : mise à jour du rapport id={}", rapport.getId());
+        Rapport updated = rapportRepository.save(rapport);
+        logger.info("Rapport mis à jour id={}", updated.getId());
+        return updated;
+    }
 
     @Override
-    /**
-     * Cette méthode permet de supprimer un enregistrement
-     * de la base de données à partir de son identifiant..
-     *
-     * @param id l'objet rapport à supprimer
-     */
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
+        logger.info("Service : suppression du rapport id={}", id);
         rapportRepository.deleteById(id);
+        logger.info("Rapport supprimé id={}", id);
     }
 }

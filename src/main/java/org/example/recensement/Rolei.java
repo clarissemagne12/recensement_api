@@ -1,6 +1,5 @@
 package org.example.recensement;
 
-import org.example.recensement.entities.Chefbureau;
 import org.example.recensement.entities.Role;
 
 import java.util.List;
@@ -12,4 +11,7 @@ public interface Rolei {
     Role save(Role role);
     void deleteById(Long id);
     Role update(Role role);
+
+
+
 }

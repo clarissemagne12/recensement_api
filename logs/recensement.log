@@ -1,0 +1,43 @@
+2026-02-06T13:12:28.720+01:00  INFO 19320 --- [recensement] [restartedMain] o.e.recensement.RecensementApplication   : Starting RecensementApplication using Java 25.0.1 with PID 19320 (C:\Users\user\Downloads\recensement_pop\recensement\target\classes started by user in C:\Users\user\Downloads\recensement_pop\recensement)
+2026-02-06T13:12:28.722+01:00  INFO 19320 --- [recensement] [restartedMain] o.e.recensement.RecensementApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-02-06T13:12:28.763+01:00  INFO 19320 --- [recensement] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-06T13:12:28.763+01:00  INFO 19320 --- [recensement] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-06T13:12:29.367+01:00  INFO 19320 --- [recensement] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-06T13:12:29.435+01:00  INFO 19320 --- [recensement] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 6 JPA repository interfaces.
+2026-02-06T13:12:29.823+01:00  INFO 19320 --- [recensement] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8082 (http)
+2026-02-06T13:12:29.835+01:00  INFO 19320 --- [recensement] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-06T13:12:29.835+01:00  INFO 19320 --- [recensement] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-06T13:12:29.870+01:00  INFO 19320 --- [recensement] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1106 ms
+2026-02-06T13:12:29.988+01:00  INFO 19320 --- [recensement] [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-02-06T13:12:30.027+01:00  INFO 19320 --- [recensement] [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-02-06T13:12:30.409+01:00  INFO 19320 --- [recensement] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-06T13:12:30.435+01:00  INFO 19320 --- [recensement] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-06T13:12:30.487+01:00  INFO 19320 --- [recensement] [restartedMain] i.opentelemetry.api.GlobalOpenTelemetry  : AutoConfiguredOpenTelemetrySdk found on classpath but automatic configuration is disabled. To enable, run your JVM with -Dotel.java.global-autoconfigure.enabled=true
+2026-02-06T13:12:30.569+01:00  INFO 19320 --- [recensement] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5e85b2f3
+2026-02-06T13:12:30.571+01:00  INFO 19320 --- [recensement] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-06T13:12:30.602+01:00  WARN 19320 --- [recensement] [restartedMain] org.hibernate.orm.core                   : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly.The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-02-06T13:12:30.604+01:00  WARN 19320 --- [recensement] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-06T13:12:30.620+01:00  INFO 19320 --- [recensement] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/recensement]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 5.5.5
+	Default catalog/schema: recensement/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-06T13:12:31.371+01:00  INFO 19320 --- [recensement] [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-06T13:12:31.980+01:00  INFO 19320 --- [recensement] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-06T13:12:32.046+01:00  INFO 19320 --- [recensement] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-06T13:12:32.260+01:00  WARN 19320 --- [recensement] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-06T13:12:32.474+01:00  INFO 19320 --- [recensement] [restartedMain] o.s.b.h.a.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/recensement'
+2026-02-06T13:12:32.515+01:00  INFO 19320 --- [recensement] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8082 (http) with context path '/'
+2026-02-06T13:12:32.519+01:00  INFO 19320 --- [recensement] [restartedMain] o.e.recensement.RecensementApplication   : Started RecensementApplication in 4.159 seconds (process running for 14.154)
+2026-02-06T13:16:12.999+01:00  INFO 19320 --- [recensement] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-06T13:16:13.009+01:00  INFO 19320 --- [recensement] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-02-06T13:16:13.013+01:00  INFO 19320 --- [recensement] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-06T13:16:13.018+01:00  INFO 19320 --- [recensement] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-02-06T13:16:13.025+01:00  INFO 19320 --- [recensement] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

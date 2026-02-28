@@ -2,98 +2,70 @@ package org.example.recensement.services;
 
 import jakarta.transaction.Transactional;
 import org.example.recensement.Rolei;
-import org.example.recensement.entities.Rapport;
 import org.example.recensement.entities.Role;
-import org.example.recensement.repositories.RapportRepository;
 import org.example.recensement.repositories.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @Transactional
 public class RoleService implements Rolei {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(RoleService.class);
 
-    /** annotation d'injecter un objet dans une autre classe
-     * sans instanciation manuelle avec new
-     */
-    @Autowired
-
-    /** Repository injecté pour accéder aux données des roles */
     private final RoleRepository roleRepository;
 
-    /**
-     * Constructeur du service Role.
-     *
-     * @param roleRepository le repository de l'entité
-     */
-
     public RoleService(RoleRepository roleRepository) {
-
         this.roleRepository = roleRepository;
     }
 
-
     @Override
-    /**Récupère toutes
-     * les rapports enregistrés.
-     * @return liste de tous les rapports
-     */
-    public List<Role> findAll(){
-        return roleRepository.findAll();
-    }
-    /**Cette annotation indique que la méthode redéfinit une
-     * méthode déclarée dans une interface
-     * ou une classe parente
-     */
-    @Override
-
-    /**rechercher un rapport dans la base de données
-     * à partir de son identifiant.
-     */
-    public Optional<Role> findById(Long id){
-        return roleRepository.findById(id);
+    public List<Role> findAll() {
+        logger.info("Service : récupération de tous les rôles");
+        List<Role> roles = roleRepository.findAll();
+        logger.debug("Nombre de rôles récupérés : {}", roles.size());
+        return roles;
     }
 
     @Override
-
-    /**
-     * Enregistre un nouveau role dans la base de données.
-     *
-     * @param role l'objet roel à enregistrer
-     * @return un role enregistré avec son ID généré
-     */
-
-    public Role save(Role role){
-
-        return roleRepository.save(role);
+    public Optional<Role> findById(Long id) {
+        logger.info("Service : recherche du rôle id={}", id);
+        return roleRepository.findById(id)
+                .map(role -> {
+                    logger.debug("Rôle trouvé id={}", id);
+                    return role;
+                })
+                .or(() -> {
+                    logger.warn("Rôle non trouvé id={}", id);
+                    return Optional.empty();
+                });
     }
 
-    /**
-     * Met à jour d'un role existant.
-     *
-     * @param role le role à mettre à jour
-     * @return le role mis à jour
-     */
     @Override
-    public Role update(Role role){
-
-        return roleRepository.save(role);
+    public Role save(Role role) {
+        logger.info("Service : création d’un rôle");
+        Role saved = roleRepository.save(role);
+        logger.info("Rôle créé id={}", saved.getId());
+        return saved;
     }
 
-
-
+    @Override
+    public Role update(Role role) {
+        logger.info("Service : mise à jour du rôle id={}", role.getId());
+        Role updated = roleRepository.save(role);
+        logger.info("Rôle mis à jour id={}", updated.getId());
+        return updated;
+    }
 
     @Override
-    /**
-     * Cette méthode permet de supprimer un enregistrement
-     * de la base de données à partir de son identifiant..
-     *
-     * @param id l'objet rapport à supprimer
-     */
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
+        logger.info("Service : suppression du rôle id={}", id);
         roleRepository.deleteById(id);
+        logger.info("Rôle supprimé id={}", id);
     }
 }

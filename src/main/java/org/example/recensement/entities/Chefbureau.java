@@ -6,7 +6,6 @@ package org.example.recensement.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.example.recensement.entities.Role;
 
 import java.io.Serializable;
 
@@ -35,7 +34,7 @@ public class Chefbureau implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(nullable = false, length = 191)
     private String nom;
@@ -49,16 +48,16 @@ public class Chefbureau implements Serializable {
     public Chefbureau() {
     }
 
-    public Chefbureau(Integer id) {
+    public Chefbureau(Long id) {
         this.id = id;
     }
 
-    public Chefbureau(Integer id, String nom) {
+    public Chefbureau(Long id, String nom) {
         this.id = id;
         this.nom = nom;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -56,7 +56,7 @@ public class Agent implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
 
     /**
      * Nom de l’agent
@@ -91,14 +91,14 @@ public class Agent implements Serializable {
     /**
      * Constructeur avec identifiant
      */
-    public Agent(Integer id) {
+    public Agent(Long id) {
         this.id = id;
     }
 
     /**
      * Constructeur avec identifiant et nom
      */
-    public Agent(Integer id, String nom) {
+    public Agent(Long id, String nom) {
         this.id = id;
         this.nom = nom;
     }
@@ -107,11 +107,11 @@ public class Agent implements Serializable {
     /**
      * GENERATION DES GETTERS ET SETTERS PAR DEFAUT ET AVEC UN PARAMETRE
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

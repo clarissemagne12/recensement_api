@@ -4,86 +4,68 @@ import jakarta.transaction.Transactional;
 import org.example.recensement.Recensementi;
 import org.example.recensement.entities.Recensement;
 import org.example.recensement.repositories.RecensementRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @Transactional
 public class RecensementService implements Recensementi {
-    @Autowired
 
-    /** Repository injecté pour accéder aux données des cours */
+    private static final Logger logger =
+            LoggerFactory.getLogger(RecensementService.class);
+
     private final RecensementRepository recensementRepository;
 
-    /**
-     * Constructeur du service recensement.
-     *
-     * @param recensementRepository le repository de l'entité
-     */
-
     public RecensementService(RecensementRepository recensementRepository) {
-
         this.recensementRepository = recensementRepository;
     }
 
-    /**
-     * Récupère tous les recensement enregistrés.
-     *
-     * @return liste de tous les recensement
-     */
     @Override
-    public List<Recensement> findAll(){
-        return recensementRepository.findAll();
-    }
-    @Override
-
-    /**
-     * Méthode publique qui peut être appelée
-     * depuis n’importe quelle classe (comme ton contrôleur).
-     *
-     * Elle prend un identifiant id de type Long
-     * pour rechercher un recensement.
-     */
-     public Optional<Recensement> findById(Long id){
-        return recensementRepository.findById(id);
+    public List<Recensement> findAll() {
+        logger.info("Service : récupération de tous les recensements");
+        List<Recensement> recensements = recensementRepository.findAll();
+        logger.debug("Nombre de recensements récupérés : {}", recensements.size());
+        return recensements;
     }
 
-    /**
-     * Enregistre un nouveau recensement dans la base de données.
-     *
-     * @param recensement l'objet recensement à enregistrer
-     * @return le recensement enregistré avec son ID généré
-     */
     @Override
-    public Recensement save(Recensement recensement){
-
-        return recensementRepository.save(recensement);
+    public Optional<Recensement> findById(Long id) {
+        logger.info("Service : recherche du recensement id={}", id);
+        return recensementRepository.findById(id)
+                .map(r -> {
+                    logger.debug("Recensement trouvé id={}", id);
+                    return r;
+                })
+                .or(() -> {
+                    logger.warn("Recensement non trouvé id={}", id);
+                    return Optional.empty();
+                });
     }
 
-    /**
-     * Met à jour un cours existant.
-     *
-     * @param recensement le cours à mettre à jour
-     * @return le cours mis à jour
-     */
     @Override
-    public Recensement update(Recensement recensement){
-
-        return recensementRepository.save(recensement);
+    public Recensement save(Recensement recensement) {
+        logger.info("Service : création d’un recensement");
+        Recensement saved = recensementRepository.save(recensement);
+        logger.info("Recensement créé avec succès id={}", saved.getId());
+        return saved;
     }
 
+    @Override
+    public Recensement update(Recensement recensement) {
+        logger.info("Service : mise à jour du recensement id={}", recensement.getId());
+        Recensement updated = recensementRepository.save(recensement);
+        logger.info("Recensement mis à jour id={}", updated.getId());
+        return updated;
+    }
 
     @Override
-    /**
-     * Cette méthode permet de supprimer un enregistrement
-     * de la base de données à partir de son identifiant.
-     *
-     * @param id l'objet rapport à supprimer
-     *
-     */
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
+        logger.info("Service : suppression du recensement id={}", id);
         recensementRepository.deleteById(id);
+        logger.info("Recensement supprimé id={}", id);
     }
 }

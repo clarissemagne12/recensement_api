@@ -5,6 +5,7 @@
 package org.example.recensement.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -27,7 +28,8 @@ public class Role  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
+    @Getter
     @Basic(optional = false)
     @Column(nullable = false, length = 191)
     private String libelle;
@@ -39,20 +41,20 @@ public class Role  {
     public Role() {
     }
 
-    public Role(Integer id) {
+    public Role(Long id) {
         this.id = id;
     }
 
-    public Role(Integer id, String libelle) {
+    public Role(Long id, String libelle) {
         this.id = id;
         this.libelle = libelle;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -102,7 +104,7 @@ public class Role  {
 
     @Override
     public String toString() {
-        return "com.mycompany.mavenproject3.Role[ id=" + id + " ]";
+        return "com.example.recensement.Role[ id=" + id + " ]";
     }
-    
+
 }

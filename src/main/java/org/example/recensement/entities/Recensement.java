@@ -29,7 +29,7 @@ public class Recensement implements Serializable {
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(nullable = false)
     private LocalDate date;
@@ -50,21 +50,21 @@ public class Recensement implements Serializable {
     public Recensement() {
     }
 
-    public Recensement(Integer id) {
+    public Recensement(Long id) {
         this.id = id;
     }
 
-    public Recensement(Integer id, LocalDate date, String lieu) {
+    public Recensement(Long id, LocalDate date, String lieu) {
         this.id = id;
         this.date = date;
         this.lieu = lieu;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
