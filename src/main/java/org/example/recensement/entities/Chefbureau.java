@@ -60,11 +60,16 @@ public class Chefbureau implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    public Long getId() {
+        return id;
+    }
 
     public void setNom(String nom) {
         this.nom = nom;
     }
-
+    public String getNom() {
+        return nom;
+    }
     public void setIdRole(Role idRole) {
         this.idRole = idRole;
     }
